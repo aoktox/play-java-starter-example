@@ -6,7 +6,7 @@ files:
     destination: /var/www/html/
 hooks:
   BeforeInstall:
-   - location: build_app
+    - location: build_app
       timeout: 300
       runas: root
     - location: start_server
