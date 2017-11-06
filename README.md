@@ -1,5 +1,7 @@
 [<img src="https://img.shields.io/travis/playframework/play-java-starter-example.svg"/>](https://travis-ci.org/playframework/play-java-starter-example)
 
+[ ![Codeship Status for aoktox/play-java-starter-example](https://app.codeship.com/projects/1fab6e70-96c5-0135-1042-7e44d22860e0/status?branch=master)](https://app.codeship.com/projects/251685)
+
 # play-java-starter-example
 
 This is a starter application that shows how Play works.  Please see the documentation at https://www.playframework.com/documentation/latest/Home for more details.
