@@ -1,29 +1,30 @@
-machine:
-  timezone: UTC
-  java:
-    version: oraclejdk8
+workflows:
+  machine:
+    timezone: UTC
+    java:
+      version: oraclejdk8
 
-# Collect build artifacts
-general:
-  artifacts:
-    - target/universal
+  # Collect build artifacts
+  general:
+    artifacts:
+      - target/universal
 
-dependencies:
-  # Cache the resolution-cache and build streams to speed things up
-  cache_directories:
-    - "~/.sbt"
-    - "target/resolution-cache"
-    - "target/streams"
-    - "project/target/resolution-cache"
-    - "project/target/streams"
-  # Compile all sources
-  override:
-    - sbt test:compile
+  dependencies:
+    # Cache the resolution-cache and build streams to speed things up
+    cache_directories:
+      - "~/.sbt"
+      - "target/resolution-cache"
+      - "target/streams"
+      - "project/target/resolution-cache"
+      - "project/target/streams"
+    # Compile all sources
+    override:
+      - sbt test:compile
 
-test:
-  override:
-    - sbt test
-    
-  # Copy test reports to Circle test reports dir then package app for deploy
-  post:
-    - sbt dist
+  test:
+    override:
+      - sbt test
+
+    # Copy test reports to Circle test reports dir then package app for deploy
+    post:
+      - sbt dist
