@@ -26,7 +26,7 @@ jobs: # a collection of steps
             - "project/target/streams"
           key: circleci-demo-java-spring-{{ checksum "build.sbt" }}
       
-      - run: cat /dev/null | sbt dist
+      - run: cat /dev/null | sbt test dist
       
       - store_artifacts: # store the uberjar as an artifact
           path: target/universal/play-java-starter-example-1.0-SNAPSHOT.zip
