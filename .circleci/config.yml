@@ -1,30 +1,32 @@
-workflows:
-  machine:
-    timezone: UTC
-    java:
-      version: oraclejdk8
+version: 2 # use CircleCI 2.0
+jobs: # a collection of steps
+  build: # runs not using Workflows must have a `build` job as entry point
+    
+    working_directory: ~/circleci-demo-java-spring # directory where steps will run
 
-  # Collect build artifacts
-  general:
-    artifacts:
-      - target/universal
+    docker: # run the steps with Docker
+      - image: circleci/openjdk:8-jdk-browsers # ...with this image as the primary container; this is where all `steps` will run
 
-  dependencies:
-    # Cache the resolution-cache and build streams to speed things up
-    cache_directories:
-      - "~/.sbt"
-      - "target/resolution-cache"
-      - "target/streams"
-      - "project/target/resolution-cache"
-      - "project/target/streams"
-    # Compile all sources
-    override:
-      - sbt test:compile
+    steps: # a collection of executable commands
 
-  test:
-    override:
-      - sbt test
+      - checkout # check out source code to working directory
 
-    # Copy test reports to Circle test reports dir then package app for deploy
-    post:
-      - sbt dist
+      - restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
+          key: circleci-demo-java-spring-{{ checksum "pom.xml" }}
+      
+      - run: sbt test:compile # gets the project dependencies
+      
+      - save_cache: # saves the project dependencies
+          paths:
+            - "~/.sbt"
+            - "target/resolution-cache"
+            - "target/streams"
+            - "project/target/resolution-cache"
+            - "project/target/streams"
+          key: circleci-demo-java-spring-{{ checksum "build.sbt" }}
+      
+      - run: sbt dist
+      
+      - store_artifacts: # store the uberjar as an artifact
+          path: target/universal/play-java-starter-example-1.0-SNAPSHOT.zip
+      # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
