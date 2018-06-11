@@ -19,6 +19,7 @@ jobs: # a collection of steps
       - save_cache: # saves the project dependencies
           paths:
             - "~/.sbt"
+            - "~/.ivy2/cache"
             - "target/resolution-cache"
             - "target/streams"
             - "project/target/resolution-cache"
