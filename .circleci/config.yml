@@ -2,7 +2,7 @@ version: 2 # use CircleCI 2.0
 jobs: # a collection of steps
   build: # runs not using Workflows must have a `build` job as entry point
     
-    working_directory: ~/circleci-demo-java-spring # directory where steps will run
+    working_directory: ~/circleci-play-java-sbt # directory where steps will run
 
     docker: # run the steps with Docker
       - image: circleci/openjdk:8-jdk-browsers # ...with this image as the primary container; this is where all `steps` will run
@@ -12,7 +12,7 @@ jobs: # a collection of steps
       - checkout # check out source code to working directory
 
       - restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
-          key: circleci-demo-java-spring-{{ checksum "build.sbt" }}
+          key: circleci-play-java-sbt-v1-{{ checksum "build.sbt" }}
       
       - run: cat /dev/null | sbt test:compile
       
@@ -24,7 +24,7 @@ jobs: # a collection of steps
             - "target/streams"
             - "project/target/resolution-cache"
             - "project/target/streams"
-          key: circleci-demo-java-spring-{{ checksum "build.sbt" }}
+          key: circleci-play-java-sbt-v1-{{ checksum "build.sbt" }}
       
       - run: cat /dev/null | sbt test dist
       
