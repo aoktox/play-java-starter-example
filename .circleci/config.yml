@@ -14,7 +14,7 @@ jobs: # a collection of steps
       - restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
           key: circleci-demo-java-spring-{{ checksum "build.sbt" }}
       
-      - run: cat /dev/null | sbt clean update dist
+      - run: cat /dev/null | sbt test:compile
       
       - save_cache: # saves the project dependencies
           paths:
@@ -25,7 +25,7 @@ jobs: # a collection of steps
             - "project/target/streams"
           key: circleci-demo-java-spring-{{ checksum "build.sbt" }}
       
-      - run: cat /dev/null | sbt test
+      - run: cat /dev/null | sbt dist
       
       - store_artifacts: # store the uberjar as an artifact
           path: target/universal/play-java-starter-example-1.0-SNAPSHOT.zip
